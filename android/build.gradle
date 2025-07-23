@@ -1,29 +1,55 @@
-plugins {
-    id 'com.android.library'
+package android
+
+group 'com.hui.bluetooth_enable'
+version '1.0'
+
+
+buildscript {
+    ext.kotlin_version = "2.0"
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.7.3")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
-group = 'com.hui.bluetooth_enable'
-version = '1.0'
+apply plugin: 'com.android.library'
+apply plugin: "kotlin-android"
 
 android {
-    namespace 'com.hui.bluetooth_enable' // REQUIRED in AGP 8+
+    namespace = "com.hui.bluetooth_enable"
+
     compileSdk = 35
 
-    defaultConfig {
-        minSdk = 18
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+    }
+    defaultConfig {
+        minSdk = 21
     }
 
-    lint {
-        disable 'InvalidPackage'
+    dependencies {
+        testImplementation("org.jetbrains.kotlin:kotlin-test")
+        testImplementation("org.mockito:mockito-core:5.0.0")
     }
+
 }
 
-dependencies {
-    implementation 'androidx.core:core:1.8.0'
-}
